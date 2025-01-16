@@ -244,7 +244,7 @@ const Subscription = () => {
                     key === "premium" ? "text-white" : "text-gray-900"
                   }`}
                 >
-                  ₹{plan.price}/100
+                  ₹{plan.price/100}
                 </p>
                 <p
                   className={`text-sm mt-2 ${
