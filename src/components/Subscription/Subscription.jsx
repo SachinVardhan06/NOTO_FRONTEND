@@ -6,7 +6,7 @@ const plans = {
   basic: {
     id: "basic",
     name: "Basic Plan",
-    price: 49,
+    price: 4900,
     features: [
       "Access to Notes",
       "Community Support",
@@ -17,7 +17,7 @@ const plans = {
   premium: {
     id: "premium",
     name: "Premium Plan",
-    price: 499,
+    price: 49900,
     features: [
       "Everything in Basic",
       "Priority Support",
@@ -244,7 +244,7 @@ const Subscription = () => {
                     key === "premium" ? "text-white" : "text-gray-900"
                   }`}
                 >
-                  ₹{plan.price}
+                  ₹{plan.price}/100
                 </p>
                 <p
                   className={`text-sm mt-2 ${
