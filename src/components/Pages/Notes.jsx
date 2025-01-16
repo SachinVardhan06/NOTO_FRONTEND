@@ -548,6 +548,10 @@ import { FaLock, FaSearch, FaBook, FaFileAlt } from "react-icons/fa";
 const PDFViewer = ({ url, onClose }) => {
   const modalRef = useRef();
 
+  const openInNewTab = () => {
+    window.open(`/PDFFiles/${url}`, '_blank');
+  };
+
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (modalRef.current && !modalRef.current.contains(e.target)) {
@@ -562,17 +566,26 @@ const PDFViewer = ({ url, onClose }) => {
     <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
       <div
         ref={modalRef}
-        className="w-full max-w-4xl h-[80vh] bg-white rounded-lg overflow-hidden relative"
+        className="w-full max-w-4xl bg-white rounded-lg overflow-hidden relative"
       >
-        <button
-          onClick={onClose}
-          className="absolute top-2 right-2 z-10 bg-red-500 text-white p-2 rounded-full hover:bg-red-600"
-        >
-          ✕
-        </button>
+        <div className="flex justify-end gap-2 absolute top-2 right-2 z-10">
+          <button
+            onClick={openInNewTab}
+            className="bg-blue-500 text-white p-2 rounded-full hover:bg-blue-600"
+            title="Open in new tab"
+          >
+            <FaFileAlt />
+          </button>
+          <button
+            onClick={onClose}
+            className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600"
+          >
+            ✕
+          </button>
+        </div>
         <iframe
           src={`/PDFFiles/${url}`}
-          className="w-full h-full"
+          className="w-full h-[80vh]"
           title="PDF Viewer"
         />
       </div>
@@ -630,7 +643,7 @@ const Notes = () => {
         papers: [
           {
             id: 1,
-            title: "Free Sample Paper 1",
+            title: "Sample Paper 1",
             url: "Sample Paper 1 Class 11.pdf",
             isFree: true,
           },
@@ -645,7 +658,7 @@ const Notes = () => {
         papers: [
           {
             id: 1,
-            title: "Free Sample Paper",
+            title: "Sample Paper 1",
             url: "Sample Paper 1 Class 12.pdf",
             isFree: true,
           },
