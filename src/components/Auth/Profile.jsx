@@ -18,9 +18,12 @@ const Profile = () => {
       }
 
       try {
-        const response = await axios.get("http://127.0.0.1:8000/api/profile/", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const response = await axios.get(
+          "https://noto-server-80j5.onrender.com/api/profile/",
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
         setUser(response.data);
       } catch (error) {
         console.error("Error fetching user data:", error);
