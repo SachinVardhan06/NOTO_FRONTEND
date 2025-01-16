@@ -158,7 +158,7 @@
 
 //       try {
 //         const response = await axios.get(
-//           "http://127.0.0.1:8000/api/subscription/",
+//           "https://noto-server-80j5.onrender.com/api/subscription/",
 //           {
 //             headers: { Authorization: `Bearer ${token}` },
 //           }
@@ -350,7 +350,7 @@
 //   return (
 //     <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
 //       <div ref={modalRef} className="w-full max-w-4xl h-[80vh] bg-white rounded-lg overflow-hidden relative">
-//         <button 
+//         <button
 //           onClick={onClose}
 //           className="absolute top-2 right-2 z-10 bg-red-500 text-white p-2 rounded-full hover:bg-red-600"
 //         >
@@ -430,7 +430,7 @@
 //       }
 
 //       try {
-//         const response = await axios.get("http://127.0.0.1:8000/api/subscription/", {
+//         const response = await axios.get("https://noto-server-80j5.onrender.com/api/subscription/", {
 //           headers: { Authorization: `Bearer ${token}` }
 //         });
 //         setSubscription(response.data);
@@ -474,7 +474,7 @@
 //   return (
 //     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-blue-900 py-12 px-4">
 //       {selectedPDF && <PDFViewer url={selectedPDF} onClose={() => setSelectedPDF(null)} />}
-      
+
 //       <div className="max-w-7xl mx-auto">
 //         <div className="text-center mb-12">
 //           <h1 className="text-4xl font-bold text-white mb-4">Study Notes</h1>
@@ -554,20 +554,27 @@ const PDFViewer = ({ url, onClose }) => {
         onClose();
       }
     };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [onClose]);
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-      <div ref={modalRef} className="w-full max-w-4xl h-[80vh] bg-white rounded-lg overflow-hidden relative">
-        <button 
+      <div
+        ref={modalRef}
+        className="w-full max-w-4xl h-[80vh] bg-white rounded-lg overflow-hidden relative"
+      >
+        <button
           onClick={onClose}
           className="absolute top-2 right-2 z-10 bg-red-500 text-white p-2 rounded-full hover:bg-red-600"
         >
           ✕
         </button>
-        <iframe src={`/PDFFiles/${url}`} className="w-full h-full" title="PDF Viewer" />
+        <iframe
+          src={`/PDFFiles/${url}`}
+          className="w-full h-full"
+          title="PDF Viewer"
+        />
       </div>
     </div>
   );
@@ -589,8 +596,8 @@ const Notes = () => {
       icon: "🧪",
       chapters: [
         { id: 1, title: "Some Basic Concepts", url: "class11chem1.pdf" },
-        { id: 2, title: "Structure of Atom", url: "class11chem2.pdf" }
-      ]
+        { id: 2, title: "Structure of Atom", url: "class11chem2.pdf" },
+      ],
     },
     {
       id: 2,
@@ -598,9 +605,9 @@ const Notes = () => {
       icon: "⚡",
       chapters: [
         { id: 1, title: "Physical World", url: "class11phy1.pdf" },
-        { id: 2, title: "Units and Measurements", url: "class11phy2.pdf" }
-      ]
-    }
+        { id: 2, title: "Units and Measurements", url: "class11phy2.pdf" },
+      ],
+    },
   ];
 
   const class12Notes = [
@@ -610,32 +617,42 @@ const Notes = () => {
       icon: "🧪",
       chapters: [
         { id: 1, title: "Solid State", url: "class12chem1.pdf" },
-        { id: 2, title: "Solutions", url: "class12chem2.pdf" }
-      ]
-    }
+        { id: 2, title: "Solutions", url: "class12chem2.pdf" },
+      ],
+    },
   ];
 
   const samplePapers = {
-    "11": [
+    11: [
       {
         id: 1,
         subject: "Chemistry",
         papers: [
-          { id: 1, title: "Free Sample Paper 1", url: "Sample Paper 1 Class 11.pdf", isFree: true },
-          { id: 2, title: "Premium Paper 1", url: "class11chem_p1.pdf" }
-        ]
-      }
+          {
+            id: 1,
+            title: "Free Sample Paper 1",
+            url: "Sample Paper 1 Class 11.pdf",
+            isFree: true,
+          },
+          { id: 2, title: "Premium Paper 1", url: "class11chem_p1.pdf" },
+        ],
+      },
     ],
-    "12": [
+    12: [
       {
         id: 1,
         subject: "Chemistry",
         papers: [
-          { id: 1, title: "Free Sample Paper", url: "Sample Paper 1 Class 12.pdf", isFree: true },
-          { id: 2, title: "Premium Paper 1", url: "class12chem_p1.pdf" }
-        ]
-      }
-    ]
+          {
+            id: 1,
+            title: "Free Sample Paper",
+            url: "Sample Paper 1 Class 12.pdf",
+            isFree: true,
+          },
+          { id: 2, title: "Premium Paper 1", url: "class12chem_p1.pdf" },
+        ],
+      },
+    ],
   };
 
   useEffect(() => {
@@ -647,9 +664,12 @@ const Notes = () => {
       }
 
       try {
-        const response = await axios.get("http://127.0.0.1:8000/api/subscription/", {
-          headers: { Authorization: `Bearer ${token}` }
-        });
+        const response = await axios.get(
+          "https://noto-server-80j5.onrender.com/api/subscription/",
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
         setSubscription(response.data);
       } catch (error) {
         console.error("Error:", error);
@@ -663,14 +683,17 @@ const Notes = () => {
   }, [navigate]);
 
   const handleResourceClick = (resource, type) => {
-    if (type === 'notes' && (!subscription || subscription.membership_type === 'Free')) {
+    if (
+      type === "notes" &&
+      (!subscription || subscription.membership_type === "Free")
+    ) {
       toast.error("Please subscribe to access study notes");
       navigate("/subscription");
       return;
     }
 
-    if (type === 'paper') {
-      if (!subscription || subscription.membership_type === 'Free') {
+    if (type === "paper") {
+      if (!subscription || subscription.membership_type === "Free") {
         if (!resource.isFree) {
           toast.error("Please subscribe to access premium papers");
           navigate("/subscription");
@@ -687,13 +710,13 @@ const Notes = () => {
   };
 
   const filteredNotes = (selectedClass === "11" ? class11Notes : class12Notes)
-    .map(subject => ({
+    .map((subject) => ({
       ...subject,
-      chapters: subject.chapters.filter(chapter =>
+      chapters: subject.chapters.filter((chapter) =>
         chapter.title.toLowerCase().includes(searchTerm.toLowerCase())
-      )
+      ),
     }))
-    .filter(subject => subject.chapters.length > 0);
+    .filter((subject) => subject.chapters.length > 0);
 
   if (loading) {
     return (
@@ -705,12 +728,18 @@ const Notes = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-blue-900 py-12 px-4">
-      {selectedPDF && <PDFViewer url={selectedPDF} onClose={() => setSelectedPDF(null)} />}
-      
+      {selectedPDF && (
+        <PDFViewer url={selectedPDF} onClose={() => setSelectedPDF(null)} />
+      )}
+
       <div className="max-w-7xl mx-auto space-y-12">
         <div className="text-center">
-          <h1 className="text-4xl font-bold text-white mb-4">Study Resources</h1>
-          <p className="text-xl text-blue-200">Access comprehensive study materials</p>
+          <h1 className="text-4xl font-bold text-white mb-4">
+            Study Resources
+          </h1>
+          <p className="text-xl text-blue-200">
+            Access comprehensive study materials
+          </p>
         </div>
 
         <div className="flex justify-between items-center">
@@ -749,20 +778,26 @@ const Notes = () => {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredNotes.map((subject) => (
-              <div key={subject.id} className="bg-white bg-opacity-10 backdrop-blur-lg rounded-xl p-6">
+              <div
+                key={subject.id}
+                className="bg-white bg-opacity-10 backdrop-blur-lg rounded-xl p-6"
+              >
                 <div className="flex items-center mb-4">
                   <span className="text-3xl mr-3">{subject.icon}</span>
-                  <h3 className="text-xl font-bold text-white">{subject.name}</h3>
+                  <h3 className="text-xl font-bold text-white">
+                    {subject.name}
+                  </h3>
                 </div>
                 <ul className="space-y-2">
                   {subject.chapters.map((chapter) => (
                     <li key={chapter.id}>
                       <button
-                        onClick={() => handleResourceClick(chapter, 'notes')}
+                        onClick={() => handleResourceClick(chapter, "notes")}
                         className="text-blue-200 hover:text-white transition-colors duration-200 text-left w-full py-2 flex items-center justify-between"
                       >
                         <span>{chapter.title}</span>
-                        {(!subscription || subscription.membership_type === 'Free') && (
+                        {(!subscription ||
+                          subscription.membership_type === "Free") && (
                           <FaLock className="text-yellow-500" />
                         )}
                       </button>
@@ -781,19 +816,26 @@ const Notes = () => {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {samplePapers[selectedClass].map((subject) => (
-              <div key={subject.id} className="bg-white bg-opacity-10 backdrop-blur-lg rounded-xl p-6">
-                <h3 className="text-xl font-bold text-white mb-4">{subject.subject}</h3>
+              <div
+                key={subject.id}
+                className="bg-white bg-opacity-10 backdrop-blur-lg rounded-xl p-6"
+              >
+                <h3 className="text-xl font-bold text-white mb-4">
+                  {subject.subject}
+                </h3>
                 <ul className="space-y-2">
                   {subject.papers.map((paper) => (
                     <li key={paper.id}>
                       <button
-                        onClick={() => handleResourceClick(paper, 'paper')}
+                        onClick={() => handleResourceClick(paper, "paper")}
                         className="text-blue-200 hover:text-white transition-colors duration-200 text-left w-full py-2 flex items-center justify-between"
                       >
                         <span>{paper.title}</span>
-                        {(!subscription || subscription.membership_type === 'Free') && !paper.isFree && (
-                          <FaLock className="text-yellow-500" />
-                        )}
+                        {(!subscription ||
+                          subscription.membership_type === "Free") &&
+                          !paper.isFree && (
+                            <FaLock className="text-yellow-500" />
+                          )}
                       </button>
                     </li>
                   ))}

@@ -7,13 +7,23 @@ const plans = {
     id: "basic",
     name: "Basic Plan",
     price: 4900,
-    features: ["Access to Notes", "Community Support","Sample Papers","Monthly Updates"],
+    features: [
+      "Access to Notes",
+      "Community Support",
+      "Sample Papers",
+      "Monthly Updates",
+    ],
   },
   premium: {
     id: "premium",
     name: "Premium Plan",
     price: 49900,
-    features: ["Everything in Basic", "Priority Support", "Sample Papers","Yearly Updates"],
+    features: [
+      "Everything in Basic",
+      "Priority Support",
+      "Sample Papers",
+      "Yearly Updates",
+    ],
   },
 };
 
@@ -26,21 +36,24 @@ const Subscription = () => {
   useEffect(() => {
     const fetchSubscription = async () => {
       try {
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem("token");
         if (!token) {
-          navigate('/login');
+          navigate("/login");
           return;
         }
 
-        const response = await fetch('http://127.0.0.1:8000/api/subscription/', {
-          headers: {
-            'Authorization': `Bearer ${token}`
+        const response = await fetch(
+          "https://noto-server-80j5.onrender.com/api/subscription/",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
           }
-        });
+        );
         const data = await response.json();
         setCurrentPlan(data);
       } catch (error) {
-        console.error('Error fetching subscription:', error);
+        console.error("Error fetching subscription:", error);
       } finally {
         setLoading(false);
       }
@@ -80,7 +93,7 @@ const Subscription = () => {
 
       // Create order
       const orderResponse = await fetch(
-        "http://127.0.0.1:8000/api/create-order/",
+        "https://noto-server-80j5.onrender.com/api/create-order/",
         {
           method: "POST",
           headers: {
@@ -115,7 +128,7 @@ const Subscription = () => {
 
             // Verify payment
             const verifyResponse = await fetch(
-              "http://127.0.0.1:8000/api/verify-payment/",
+              "https://noto-server-80j5.onrender.com/api/verify-payment/",
               {
                 method: "POST",
                 headers: {
@@ -171,7 +184,9 @@ const Subscription = () => {
       <div className="max-w-7xl mx-auto">
         {currentPlan && (
           <div className="mb-12 p-6 bg-white bg-opacity-10 backdrop-blur-lg rounded-xl shadow-xl">
-            <h3 className="text-2xl font-bold text-white mb-4">Current Subscription</h3>
+            <h3 className="text-2xl font-bold text-white mb-4">
+              Current Subscription
+            </h3>
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-white text-lg">
@@ -182,7 +197,9 @@ const Subscription = () => {
                 </p>
               </div>
               <div className="bg-green-500 px-4 py-2 rounded-full">
-                <p className="text-white font-semibold">{currentPlan.time_left}</p>
+                <p className="text-white font-semibold">
+                  {currentPlan.time_left}
+                </p>
               </div>
             </div>
           </div>
@@ -244,14 +261,21 @@ const Subscription = () => {
                 </ul>
                 <button
                   onClick={() => handlePayment(key)}
-                  disabled={loading || currentPlan?.membership_type.toLowerCase() === key}
+                  disabled={
+                    loading ||
+                    currentPlan?.membership_type.toLowerCase() === key
+                  }
                   className={`mt-10 w-full py-4 px-6 rounded-xl text-lg font-semibold 
-                    ${key === "premium" 
-                      ? "bg-white text-blue-600 hover:bg-gray-100"
-                      : "bg-blue-600 text-white hover:bg-blue-700"}
-                    ${currentPlan?.membership_type.toLowerCase() === key
-                      ? "opacity-50 cursor-not-allowed"
-                      : "transform hover:scale-105 transition-all duration-200"}
+                    ${
+                      key === "premium"
+                        ? "bg-white text-blue-600 hover:bg-gray-100"
+                        : "bg-blue-600 text-white hover:bg-blue-700"
+                    }
+                    ${
+                      currentPlan?.membership_type.toLowerCase() === key
+                        ? "opacity-50 cursor-not-allowed"
+                        : "transform hover:scale-105 transition-all duration-200"
+                    }
                   `}
                 >
                   {currentPlan?.membership_type.toLowerCase() === key
