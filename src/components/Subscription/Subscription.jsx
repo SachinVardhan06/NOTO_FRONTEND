@@ -6,7 +6,7 @@ const plans = {
   basic: {
     id: "basic",
     name: "Basic Plan",
-    price: 4900,
+    price: 49,
     features: [
       "Access to Notes",
       "Community Support",
@@ -17,7 +17,7 @@ const plans = {
   premium: {
     id: "premium",
     name: "Premium Plan",
-    price: 49900,
+    price: 499,
     features: [
       "Everything in Basic",
       "Priority Support",
