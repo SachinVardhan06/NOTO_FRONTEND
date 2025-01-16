@@ -852,3 +852,5 @@ const Notes = () => {
     </div>
   );
 };
+
+export default Notes;
