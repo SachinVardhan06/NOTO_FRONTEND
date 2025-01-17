@@ -1,25 +1,89 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/logo-180.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/logo-32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/logo-16.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ACE NOTO</title>
+    <meta name="theme-color" content="#111827" />
+    <meta name="description" content="Your ultimate study companion for JEE and NEET preparation" />
+    <meta name="keywords" content="JEE, NEET, study notes, sample papers, education, ACE NOTO" />
+    
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://acenoto.com" />
+    <meta property="og:title" content="ACE NOTO - Study Smart" />
+    <meta property="og:description" content="Your ultimate study companion for JEE and NEET preparation" />
+    <meta property="og:image" content="/social-preview.png" />
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="ACE NOTO - Study Smart" />
+    <meta name="twitter:description" content="Your ultimate study companion for JEE and NEET preparation" />
+    <meta name="twitter:image" content="/social-preview.png" />
+    
+    <title>ACE NOTO - Study Smart</title>
+    
+    <!-- Preload Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    
     <style>
+      :root {
+        --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      }
+      
+      html {
+        scroll-behavior: smooth;
+      }
+      
       body {
         margin: 0;
         padding: 0;
         background-color: #111827;
         color: #ffffff;
         min-height: 100vh;
+        font-family: var(--font-sans);
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
       }
+      
       #root {
         min-height: 100vh;
+      }
+      
+      .loading {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background-color: #111827;
+      }
+      
+      .loading::after {
+        content: '';
+        width: 32px;
+        height: 32px;
+        border: 4px solid #3B82F6;
+        border-top-color: transparent;
+        border-radius: 50%;
+        animation: loading 0.75s linear infinite;
+      }
+      
+      @keyframes loading {
+        to {
+          transform: rotate(360deg);
+        }
       }
     </style>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <div class="loading"></div>
+    </div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
