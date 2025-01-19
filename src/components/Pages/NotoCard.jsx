@@ -23,8 +23,10 @@ const NoteCard = ({ note }) => {
       }
 
       if (!note.isFree) {
-        const subscription = localStorage.getItem('subscription');
-        if (!subscription) {
+        const subscriptionData = localStorage.getItem('subscription');
+        const subscription = subscriptionData ? JSON.parse(subscriptionData) : null;
+        
+        if (!subscription || subscription.membership_type === 'Free') {
           toast.warning("Premium content requires subscription");
           navigate('/subscription');
           return;
