@@ -3,6 +3,15 @@ import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Menu } from "@headlessui/react";
 import { toast } from "react-toastify";
+import { 
+  FaBook, 
+  FaLightbulb, 
+  FaUserGraduate, 
+  FaClock, 
+  FaMobileAlt, 
+  FaCheckCircle 
+} from 'react-icons/fa';
+import NoteCard from "./NotoCard";
 
 function HomePage() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -19,6 +28,67 @@ function HomePage() {
     navigate("/homepage");
     toast.success("Logged out successfully!");
   };
+  const latestNotes = [
+    {
+      id: 1,
+      title: "Physics Notes - Mechanics",
+      description: "Comprehensive study material covering Newton's Laws, Kinematics, and Dynamics",
+      subject: "Physics",
+      class: "12",
+      thumbnail: "https://img.freepik.com/premium-vector/physics-background-with-formulas-symbols_53500-1892.jpg?w=360",
+      isFree: true
+    },
+    {
+      id: 2,
+      title: "Chemistry - Organic Reactions",
+      description: "Detailed notes on reaction mechanisms and organic compounds",
+      subject: "Chemistry",
+      class: "12",
+      thumbnail: "https://img.freepik.com/premium-vector/chemistry-colorful-modern-vector-science-concept-illustration-banner_104589-2057.jpg",
+      isFree: false
+    },
+    {
+      id: 3,
+      title: "Mathematics - Calculus",
+      description: "Complete guide to differentiation and integration",
+      subject: "Mathematics",
+      class: "12",
+      thumbnail: "https://www.raedwaldtrust.com/wp-content/uploads/2020/05/realistic-math-chalkboard-background_23-2148154055.jpg",
+      isFree: false
+    }
+  ];
+  const features = [
+    {
+      title: "Quality Study Materials",
+      description: "Access comprehensive notes and study materials crafted by experts",
+      icon: FaBook
+    },
+    {
+      title: "Smart Learning",
+      description: "Interactive learning experience with practice questions and solutions",
+      icon: FaLightbulb
+    },
+    {
+      title: "Expert Guidance",
+      description: "Get support from experienced educators and mentors",
+      icon: FaUserGraduate
+    },
+    {
+      title: "24/7 Access",
+      description: "Study anytime, anywhere with our digital platform",
+      icon: FaClock
+    },
+    {
+      title: "Mobile Friendly",
+      description: "Seamless experience across all devices",
+      icon: FaMobileAlt
+    },
+    {
+      title: "Regular Updates",
+      description: "Stay updated with latest study materials and exam patterns",
+      icon: FaCheckCircle
+    }
+  ];
 
   return (
     <>
@@ -174,6 +244,32 @@ function HomePage() {
         </div>
       </div>
       <div>
+      <section className="py-20 bg-gray-800">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center text-white mb-12">Why Choose ACE NOTO?</h2>
+          <div className="grid md:grid-cols-3 gap-8">
+            {features.map((feature) => (
+              <div key={feature.title} className="p-6 bg-gray-700 rounded-lg">
+                <feature.icon className="w-12 h-12 text-blue-500 mb-4"/>
+                <h3 className="text-xl font-bold text-white mb-2">{feature.title}</h3>
+                <p className="text-gray-300">{feature.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Latest Notes Section */}
+      <section className="py-20">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center text-white mb-12">Latest Study Materials</h2>
+          <div className="grid md:grid-cols-3 gap-8">
+            {latestNotes.map((note) => (
+              <NoteCard key={note.id} note={note} />
+            ))}
+          </div>
+        </div>
+      </section>
         <footer className="bg-gradient-to-r from-black to-blue-900 text-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
