@@ -4,6 +4,7 @@ import { FaCheckCircle, FaLock } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 
 const NoteCard = ({ note }) => {
+  const [user, setUser] = useState(null);
   const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -26,7 +27,7 @@ const NoteCard = ({ note }) => {
         const subscriptionData = localStorage.getItem('subscription');
         const subscription = subscriptionData ? JSON.parse(subscriptionData) : null;
         
-        if (!subscription || subscription.membership_type === 'Free') {
+        if (!user?.subscription?.membership_type == "Premium" || !user?.subscription?.membership_type == "Basic") {
           toast.warning("Premium content requires subscription");
           navigate('/subscription');
           return;
