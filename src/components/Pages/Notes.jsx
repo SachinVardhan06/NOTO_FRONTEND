@@ -119,7 +119,7 @@ const Notes = () => {
           {
             id: 1,
             title: "Sample Paper 1",
-            url: "/PDFFiles/SamplePaper1Class12.pdf",
+            url: "SamplePaper1Class12.pdf",
             isFree: true,
           },
           { id: 2, title: "Premium Paper 1", url: "class12chem_p1.pdf" },
