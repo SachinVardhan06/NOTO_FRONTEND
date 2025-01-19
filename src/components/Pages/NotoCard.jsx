@@ -1,31 +1,41 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaCheckCircle, FaLock } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 
 const NoteCard = ({ note }) => {
   const navigate = useNavigate();
-  const isLoggedIn = !!localStorage.getItem('token');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const handleNoteClick = (e) => {
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    setIsLoggedIn(!!token);
+  }, []);
+
+  const handleNoteClick = async (e) => {
     e.preventDefault();
     
-    if (!isLoggedIn) {
-      toast.info("Please login to access notes");
-      navigate('/login');
-      return;
-    }
-
-    if (!note.isFree) {
-      const subscription = localStorage.getItem('subscription');
-      if (!subscription) {
-        toast.info("Please subscribe to access premium content");
-        navigate('/subscription');
+    try {
+      if (!isLoggedIn) {
+        toast.info("Please login to continue");
+        navigate('/login', { state: { from: `/notes/${note.subject.toLowerCase()}/${note.id}` } });
         return;
       }
-    }
 
-    navigate(`/notes/${note.subject.toLowerCase()}/${note.id}`);
+      if (!note.isFree) {
+        const subscription = localStorage.getItem('subscription');
+        if (!subscription) {
+          toast.warning("Premium content requires subscription");
+          navigate('/subscription');
+          return;
+        }
+      }
+
+      navigate('/notes');
+    } catch (error) {
+      console.error('Error accessing notes:', error);
+      toast.error('Something went wrong. Please try again.');
+    }
   };
 
   return (
