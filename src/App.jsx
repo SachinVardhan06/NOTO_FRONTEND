@@ -12,7 +12,7 @@ import NewHomePage from './components/Model/NewHomePage';
 
 const App = () => (
   <Routes>
-    <Route path="/" element={<NewHomePage/>} />
+    <Route path="/" element={<HomePage/>} />
     <Route path="/register" element={<Register />} />
     <Route path="/login" element={<Login />} />
     <Route path="/subscription" element={<Subscription />} />
