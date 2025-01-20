@@ -8,7 +8,6 @@ import Profile from './components/Auth/Profile';
 import Notes from './components/Pages/Notes';
 import FAQs from './components/Pages/FAQs';
 import ContactUs from './components/Pages/ContactUs';
-import NewHomePage from './components/Model/NewHomePage';
 
 const App = () => (
   <Routes>
