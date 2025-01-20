@@ -53,7 +53,19 @@ const Notes = ({ user, isLoggedIn }) => {
         ],
       },
     ],
-    12: [/* ...existing code... */]
+    12: [{
+      id: 1,
+      subject: "Chemistry",
+      papers: [
+        {
+          id: 1,
+          title: "Sample Paper 1",
+          url: "SamplePaper1Class12.pdf",
+          isFree: true,
+        },
+        { id: 2, title: "Premium Paper 1", url: "class11chem_p1.pdf" },
+      ],
+    },]
   };
 
   const handlePDFClick = (url, isFree = false) => {
