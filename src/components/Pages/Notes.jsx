@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { PDFViewer } from '@react-pdf/renderer';
+import { toast } from 'react-toastify';
 
 const Notes = ({ user, isLoggedIn }) => {
   const [selectedPDF, setSelectedPDF] = useState(null);
@@ -31,8 +31,17 @@ const Notes = ({ user, isLoggedIn }) => {
       name: "Chemistry",
       icon: "🧪",
       chapters: [
-        { id: 1, title: "Solid State", url: "Class 12 Chapter 1.pdf" },
+        { id: 1, title: "Solid State", url: "class12chem1.pdf" },
         { id: 2, title: "Solutions", url: "class12chem2.pdf" },
+      ],
+    },
+    {
+      id: 2,
+      name: "Physics",
+      icon: "⚡",
+      chapters: [
+        { id: 1, title: "Electric Charges", url: "class12phy1.pdf" },
+        { id: 2, title: "Electrostatic Field", url: "class12phy2.pdf" },
       ],
     },
   ];
@@ -43,29 +52,37 @@ const Notes = ({ user, isLoggedIn }) => {
         id: 1,
         subject: "Chemistry",
         papers: [
-          {
-            id: 1,
-            title: "Sample Paper 1",
-            url: "Sample Paper 1 Class 11.pdf",
-            isFree: true,
-          },
-          { id: 2, title: "Premium Paper 1", url: "class11chem_p1.pdf" },
+          { id: 1, title: "Sample Paper 1", url: "sample11chem1.pdf", isFree: true },
+          { id: 2, title: "Premium Paper 1", url: "premium11chem1.pdf" },
+        ],
+      },
+      {
+        id: 2,
+        subject: "Physics",
+        papers: [
+          { id: 1, title: "Sample Paper 1", url: "sample11phy1.pdf", isFree: true },
+          { id: 2, title: "Premium Paper 1", url: "premium11phy1.pdf" },
         ],
       },
     ],
-    12: [{
-      id: 1,
-      subject: "Chemistry",
-      papers: [
-        {
-          id: 1,
-          title: "Sample Paper 1",
-          url: "SamplePaper1Class12.pdf",
-          isFree: true,
-        },
-        { id: 2, title: "Premium Paper 1", url: "class11chem_p1.pdf" },
-      ],
-    },]
+    12: [
+      {
+        id: 1,
+        subject: "Chemistry",
+        papers: [
+          { id: 1, title: "Sample Paper 1", url: "sample12chem1.pdf", isFree: true },
+          { id: 2, title: "Premium Paper 1", url: "premium12chem1.pdf" },
+        ],
+      },
+      {
+        id: 2,
+        subject: "Physics",
+        papers: [
+          { id: 1, title: "Sample Paper 1", url: "sample12phy1.pdf", isFree: true },
+          { id: 2, title: "Premium Paper 1", url: "premium12phy1.pdf" },
+        ],
+      },
+    ],
   };
 
   const handlePDFClick = (url, isFree = false) => {
@@ -79,7 +96,6 @@ const Notes = ({ user, isLoggedIn }) => {
       return;
     }
 
-    // Open PDF in new tab
     window.open(`/pdfs/${url}`, '_blank');
   };
 
@@ -101,10 +117,38 @@ const Notes = ({ user, isLoggedIn }) => {
                 {subject.chapters.map(chapter => (
                   <li 
                     key={chapter.id}
-                    className="cursor-pointer hover:text-blue-400 transition-colors"
+                    className="cursor-pointer hover:text-blue-400 transition-colors flex items-center justify-between"
                     onClick={() => handlePDFClick(chapter.url)}
                   >
-                    {chapter.title}
+                    <span>{chapter.title}</span>
+                    <span className="text-gray-400">📄</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Class 12 Notes */}
+      <div className="mb-12">
+        <h3 className="text-2xl font-semibold mb-6">Class 12</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {class12Notes.map(subject => (
+            <div key={subject.id} className="bg-gray-800 p-6 rounded-lg">
+              <h4 className="text-xl font-semibold mb-4">
+                <span className="mr-2">{subject.icon}</span>
+                {subject.name}
+              </h4>
+              <ul className="space-y-3">
+                {subject.chapters.map(chapter => (
+                  <li 
+                    key={chapter.id}
+                    className="cursor-pointer hover:text-blue-400 transition-colors flex items-center justify-between"
+                    onClick={() => handlePDFClick(chapter.url)}
+                  >
+                    <span>{chapter.title}</span>
+                    <span className="text-gray-400">📄</span>
                   </li>
                 ))}
               </ul>
@@ -127,13 +171,16 @@ const Notes = ({ user, isLoggedIn }) => {
                     {subject.papers.map(paper => (
                       <li
                         key={paper.id}
-                        className="cursor-pointer hover:text-blue-400 transition-colors"
+                        className="cursor-pointer hover:text-blue-400 transition-colors flex items-center justify-between"
                         onClick={() => handlePDFClick(paper.url, paper.isFree)}
                       >
-                        {paper.title}
-                        {paper.isFree && (
-                          <span className="ml-2 text-green-400 text-sm">(Free)</span>
-                        )}
+                        <span>
+                          {paper.title}
+                          {paper.isFree && (
+                            <span className="ml-2 text-green-400 text-sm">(Free)</span>
+                          )}
+                        </span>
+                        <span className="text-gray-400">📄</span>
                       </li>
                     ))}
                   </ul>
