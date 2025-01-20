@@ -89,7 +89,7 @@ const Notes = () => {
       name: "Chemistry",
       icon: "🧪",
       chapters: [
-        { id: 1, title: "Solid State", url: "/PDFFiles/Class 12 Chapter 1.pdf" },
+        { id: 1, title: "Solid State", url: "Class 12 Chapter 1.pdf" },
         { id: 2, title: "Solutions", url: "class12chem2.pdf" },
       ],
     },

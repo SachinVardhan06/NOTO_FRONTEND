@@ -8,10 +8,11 @@ import Profile from './components/Auth/Profile';
 import Notes from './components/Pages/Notes';
 import FAQs from './components/Pages/FAQs';
 import ContactUs from './components/Pages/ContactUs';
+import NewHomePage from './components/Model/NewHomePage';
 
 const App = () => (
   <Routes>
-    <Route path="/" element={<HomePage/>} />
+    <Route path="/" element={<NewHomePage/>} />
     <Route path="/register" element={<Register />} />
     <Route path="/login" element={<Login />} />
     <Route path="/subscription" element={<Subscription />} />
