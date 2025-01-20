@@ -123,7 +123,7 @@ const Login = () => {
       const response = await loginUser(formData);
       localStorage.setItem('token', response.data.access);
       toast.success('Login successful!');
-      navigate('/homepage');
+      navigate('/');
     } catch (error) {
       console.error(error.response ? error.response.data : error.message);
       setError('Invalid credentials.');
