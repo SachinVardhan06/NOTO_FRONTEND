@@ -9,9 +9,9 @@ const Notes = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [subscription, setSubscription] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [selectedPDF, setSelectedPDF] = useState(null);
   const [hasReadFreePaper, setHasReadFreePaper] = useState(false);
   const navigate = useNavigate();
-
   // Data structure remains same
   const class11Notes = [
     {
