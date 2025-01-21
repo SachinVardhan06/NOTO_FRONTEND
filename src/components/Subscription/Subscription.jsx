@@ -118,7 +118,7 @@ const Subscription = () => {
 
       // Initialize Razorpay
       const options = {
-        key: "rzp_test_6coJFlp4ji11OO",
+        key: "p_live_yd8codgpJRRZ29",
         amount: plan.price,
         currency: "INR",
         name: "NOTO Study",
