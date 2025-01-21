@@ -7,7 +7,7 @@ const plans = {
     id: "basic",
     name: "Basic Plan",
     displayPrice: "₹49",
-    price: 100,
+    price: 4900,
     features: [
       "Access to Notes",
       "Community Support",
@@ -19,7 +19,7 @@ const plans = {
     id: "premium",
     name: "Premium Plan",
     displayPrice: "₹499",
-    price: 200,
+    price: 49900,
     features: [
       "Everything in Basic",
       "Priority Support",
