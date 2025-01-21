@@ -1,4 +1,3 @@
-import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Register from './components/Auth/Register';
 import Login from './components/Auth/Login';
@@ -8,6 +7,10 @@ import Profile from './components/Auth/Profile';
 import Notes from './components/Pages/Notes';
 import FAQs from './components/Pages/FAQs';
 import ContactUs from './components/Pages/ContactUs';
+import AboutUs from './components/Verify Pages/AboutUs';
+import PrivacyPolicy from './components/Verify Pages/PrivacyPolicy';
+import TandQ from './components/Verify Pages/T&Q';
+import RefundPolicy from './components/Verify Pages/RefundPolicy';
 
 const App = () => (
   <Routes>
@@ -20,6 +23,10 @@ const App = () => (
     <Route path='/notes' element={<Notes />} />
     <Route path='/faqs' element={<FAQs />} />
     <Route path='/contactus' element={<ContactUs />} />
+    <Route path='/about' element={<AboutUs />} />
+    <Route path='/privacy' element={<PrivacyPolicy />} />
+    <Route path='/terms' element={<TandQ />} />
+    <Route path='/refund' element={<RefundPolicy />} />
   </Routes>
 );
 
