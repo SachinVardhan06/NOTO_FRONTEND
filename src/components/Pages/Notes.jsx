@@ -6,23 +6,47 @@ import { FaLock, FaSearch, FaBook, FaFileAlt } from "react-icons/fa";
 
 const PDFViewer = ({ url, onClose }) => {
   const [loadError, setLoadError] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const handleIframeLoad = () => {
+    setIsLoading(false);
+  };
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
       <div className="w-full max-w-4xl bg-white rounded-lg shadow-xl relative">
         <div className="absolute top-2 right-2 z-10 flex gap-2">
-          <button onClick={onClose} className="bg-red-500 text-white p-2 rounded-full">✕</button>
+          <button 
+            onClick={onClose} 
+            className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600"
+          >
+            ✕
+          </button>
         </div>
+        
+        {isLoading && (
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+          </div>
+        )}
+
         {loadError ? (
           <div className="p-4 text-center text-red-500">
             Failed to load PDF. Please try again.
           </div>
         ) : (
           <iframe
-            src={`/PDFFiles/${url}#toolbar=0&navpanes=0`}
+            src={`/PDFFiles/${url}#view=FitH`}
             className="w-full h-[80vh]"
-            style={{ pointerEvents: 'none' }}
-            onError={() => setLoadError(true)}
+            onLoad={handleIframeLoad}
+            onError={() => {
+              setLoadError(true);
+              setIsLoading(false);
+            }}
+            style={{
+              border: 'none',
+              display: isLoading ? 'none' : 'block'
+            }}
           />
         )}
       </div>

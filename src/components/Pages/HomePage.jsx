@@ -22,6 +22,7 @@ import NoteCard from "./NotoCard";
 
 function HomePage() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
