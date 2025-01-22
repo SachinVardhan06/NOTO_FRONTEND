@@ -2,11 +2,22 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { motion } from "framer-motion";
+import {
+  FaUser,
+  FaSignOutAlt,
+  FaCrown,
+  FaCalendar,
+  FaEnvelope,
+  FaCheckCircle,
+  FaTimesCircle,
+  FaCreditCard,
+  FaHistory
+} from "react-icons/fa";
 
 const Profile = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -26,7 +37,8 @@ const Profile = () => {
         );
         setUser(response.data);
       } catch (error) {
-        console.error("Error fetching user data:", error);
+        console.error("Error:", error);
+        toast.error("Error fetching profile");
         if (error.response?.status === 401) {
           localStorage.removeItem("token");
           navigate("/login");
@@ -40,9 +52,11 @@ const Profile = () => {
   }, [navigate]);
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    toast.success("Logged out successfully");
-    navigate("/login");
+    if (window.confirm("Are you sure you want to logout?")) {
+      localStorage.removeItem("token");
+      toast.success("Logged out successfully");
+      navigate("/login");
+    }
   };
 
   if (loading) {
@@ -54,75 +68,54 @@ const Profile = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-blue-900 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-4xl mx-auto">
-        {/* Profile Header */}
-        <div className="bg-white bg-opacity-10 backdrop-blur-lg rounded-3xl p-8 mb-8 shadow-2xl">
-          <div className="flex items-center space-x-8">
-            <div className="relative">
-              <div className="h-32 w-32 rounded-full bg-gradient-to-r from-blue-400 to-blue-600 flex items-center justify-center">
-                <span className="text-4xl text-white font-bold">
-                  {user?.first_name?.[0]?.toUpperCase() ||
-                    user?.email?.[0]?.toUpperCase()}
-                </span>
-              </div>
-            </div>
-            <div className="flex-1">
-              <h1 className="text-3xl font-bold text-white mb-2">
-                {user?.first_name} {user?.last_name}
-              </h1>
-              <p className="text-blue-300">{user?.email}</p>
-              <div className="mt-4 flex space-x-4">
-                <span className="px-4 py-2 bg-blue-600 rounded-full text-white text-sm">
-                  {user?.subscription?.membership_type || "Free"} Plan
-                </span>
-                {user?.subscription?.end_date && (
-                  <span className="px-4 py-2 bg-green-500 rounded-full text-white text-sm">
-                    Valid until{" "}
-                    {new Date(
-                      user?.subscription?.end_date
-                    ).toLocaleDateString()}
-                  </span>
-                )}
-              </div>
-            </div>
-          </div>
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-blue-900 py-8 px-4 sm:py-12">
+      <div className="max-w-4xl mx-auto space-y-6">
+        {/* Header with Logout */}
+        <div className="flex justify-end">
+          <button
+            onClick={handleLogout}
+            className="flex items-center px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+          >
+            <FaSignOutAlt className="mr-2" /> Logout
+          </button>
         </div>
 
-        {/* Profile Details */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="bg-white bg-opacity-10 backdrop-blur-lg rounded-3xl p-8 shadow-2xl">
-            <h2 className="text-xl font-semibold text-white mb-6">
-              Account Details
-            </h2>
-            <div className="space-y-4">
-              <div>
-                <label className="text-sm text-blue-300">Name</label>
-                <p className="text-white font-medium">
-                  {user?.first_name} {user?.last_name}
-                </p>
-              </div>
-              <div>
-                <label className="text-sm text-blue-300">Email</label>
-                <p className="text-white font-medium">{user?.email}</p>
-              </div>
-              <div>
-                <label className="text-sm text-blue-300">Member Since</label>
-                <p className="text-white font-medium">
-                  {new Date(user?.date_joined).toLocaleDateString()}
-                </p>
-              </div>
+        {/* Profile Card */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bg-white bg-opacity-10 backdrop-blur-lg rounded-3xl p-6 sm:p-8 shadow-2xl"
+        >
+          <div className="flex flex-col sm:flex-row items-center gap-6">
+            <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center shadow-xl">
+              <FaUser className="text-white text-4xl sm:text-5xl" />
+            </div>
+            <div className="text-center sm:text-left flex-1">
+              <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
+                {user?.username}
+              </h1>
+              <p className="text-blue-300 flex items-center justify-center sm:justify-start">
+                <FaEnvelope className="mr-2" /> {user?.email}
+              </p>
             </div>
           </div>
+        </motion.div>
 
-          <div className="bg-white bg-opacity-10 backdrop-blur-lg rounded-3xl p-8 shadow-2xl">
-            <h2 className="text-xl font-semibold text-white mb-6">
-              Subscription Details
+        {/* Subscription Details */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.2 }}
+            className="bg-white bg-opacity-10 backdrop-blur-lg rounded-3xl p-6 sm:p-8 shadow-2xl"
+          >
+            <h2 className="text-xl font-semibold text-white mb-6 flex items-center">
+              <FaCrown className="mr-2 text-yellow-400" /> Subscription
             </h2>
             <div className="space-y-4">
               <div>
                 <label className="text-sm text-blue-300">Current Plan</label>
-                <p className="text-white font-medium">
+                <p className="text-white font-medium text-lg">
                   {user?.subscription?.membership_type || "Free Plan"}
                 </p>
               </div>
@@ -130,38 +123,65 @@ const Profile = () => {
                 <>
                   <div>
                     <label className="text-sm text-blue-300">Valid Until</label>
-                    <p className="text-white font-medium">
-                      {new Date(
-                        user?.subscription?.end_date
-                      ).toLocaleDateString()}
+                    <p className="text-white font-medium flex items-center">
+                      <FaCalendar className="mr-2 text-blue-400" />
+                      {new Date(user?.subscription?.end_date).toLocaleDateString()}
                     </p>
                   </div>
                   <div>
                     <label className="text-sm text-blue-300">Status</label>
-                    <p className="text-white font-medium">
-                      {new Date(user?.subscription?.end_date) > new Date()
-                        ? "Active"
-                        : "Expired"}
+                    <p className={`font-medium flex items-center ${
+                      new Date(user?.subscription?.end_date) > new Date()
+                        ? "text-green-400"
+                        : "text-red-400"
+                    }`}>
+                      {new Date(user?.subscription?.end_date) > new Date() ? (
+                        <>
+                          <FaCheckCircle className="mr-2" /> Active
+                        </>
+                      ) : (
+                        <>
+                          <FaTimesCircle className="mr-2" /> Expired
+                        </>
+                      )}
                     </p>
                   </div>
                 </>
               )}
               <button
                 onClick={() => navigate("/subscription")}
-                className="mt-4 w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-xl transition duration-200"
+                className="w-full mt-4 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-xl font-medium hover:from-blue-600 hover:to-blue-700 transition-all duration-300"
               >
-                {user?.subscription?.membership_type
-                  ? "Manage Subscription"
-                  : "Upgrade Plan"}
-              </button>
-              <button
-                onClick={handleLogout}
-                className="mt-4 w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-6 rounded-xl transition duration-200"
-              >
-                Logout
+                <FaCreditCard className="inline mr-2" /> Upgrade Plan
               </button>
             </div>
-          </div>
+          </motion.div>
+
+          {/* Account Details */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.3 }}
+            className="bg-white bg-opacity-10 backdrop-blur-lg rounded-3xl p-6 sm:p-8 shadow-2xl"
+          >
+            <h2 className="text-xl font-semibold text-white mb-6 flex items-center">
+              <FaHistory className="mr-2" /> Account Details
+            </h2>
+            <div className="space-y-4">
+              <div>
+                <label className="text-sm text-blue-300">Member Since</label>
+                <p className="text-white font-medium">
+                  {new Date(user?.date_joined).toLocaleDateString()}
+                </p>
+              </div>
+              <div>
+                <label className="text-sm text-blue-300">Last Login</label>
+                <p className="text-white font-medium">
+                  {new Date(user?.last_login || Date.now()).toLocaleDateString()}
+                </p>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </div>
     </div>

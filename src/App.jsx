@@ -11,6 +11,7 @@ import AboutUs from './components/Verify Pages/AboutUs';
 import PrivacyPolicy from './components/Verify Pages/PrivacyPolicy';
 import TandQ from './components/Verify Pages/T&Q';
 import RefundPolicy from './components/Verify Pages/RefundPolicy';
+import ForgetPass from './components/Auth/ForgetPass';
 
 const App = () => (
   <Routes>
@@ -27,6 +28,7 @@ const App = () => (
     <Route path='/privacy' element={<PrivacyPolicy />} />
     <Route path='/terms' element={<TandQ />} />
     <Route path='/refund' element={<RefundPolicy />} />
+    <Route path='/forgot-password' element={<ForgetPass />} />
   </Routes>
 );
 
