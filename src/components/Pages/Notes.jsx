@@ -57,7 +57,7 @@ const Notes = () => {
       name: "Chemistry",
       icon: "🧪",
       chapters: [
-        { id: 1, title: "Solid State", url: "class12chem1.pdf" },
+        { id: 1, title: "Solid State", url: "Class 12 Chapter 1.pdf" },
         { id: 2, title: "Solutions", url: "class12chem2.pdf" },
       ],
     },
@@ -79,7 +79,7 @@ const Notes = () => {
         id: 1,
         subject: "Chemistry",
         papers: [
-          { id: 1, title: "Sample Paper 1", url: "sample12chem1.pdf", isFree: true },
+          { id: 1, title: "Sample Paper 1", url: "SamplePaper1Class12.pdf", isFree: true },
           { id: 2, title: "Premium Paper 1", url: "premium12chem1.pdf" },
         ],
       },
