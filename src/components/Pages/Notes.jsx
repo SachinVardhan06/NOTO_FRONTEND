@@ -5,17 +5,26 @@ import { toast } from "react-toastify";
 import { FaLock, FaSearch, FaBook, FaFileAlt } from "react-icons/fa";
 
 const PDFViewer = ({ url, onClose }) => {
+  const [loadError, setLoadError] = useState(false);
+
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
       <div className="w-full max-w-4xl bg-white rounded-lg shadow-xl relative">
         <div className="absolute top-2 right-2 z-10 flex gap-2">
           <button onClick={onClose} className="bg-red-500 text-white p-2 rounded-full">✕</button>
         </div>
-        <iframe
-          src={`/PDFFiles/${url}#toolbar=0&navpanes=0`}
-          className="w-full h-[80vh]"
-          style={{ pointerEvents: 'none' }}
-        />
+        {loadError ? (
+          <div className="p-4 text-center text-red-500">
+            Failed to load PDF. Please try again.
+          </div>
+        ) : (
+          <iframe
+            src={`/PDFFiles/${url}#toolbar=0&navpanes=0`}
+            className="w-full h-[80vh]"
+            style={{ pointerEvents: 'none' }}
+            onError={() => setLoadError(true)}
+          />
+        )}
       </div>
     </div>
   );
@@ -159,7 +168,7 @@ const Notes = () => {
       navigate("/subscription");
       return;
     }
-
+    console.log("Attempting to open:", `/PDFFiles/${resource.url}`);
     if (type === "paper") {
       if (!subscription || subscription.membership_type === "Free") {
         if (!resource.isFree) {
@@ -174,6 +183,17 @@ const Notes = () => {
         setHasReadFreePaper(true);
       }
     }
+
+    fetch(`/PDFFiles/${resource.url}`).then(response => {
+      if (!response.ok) {
+        toast.error("PDF file not found");
+        return;
+      }
+      setSelectedPDF(resource.url);
+    }).catch(error => {
+      console.error("Error accessing PDF:", error);
+      toast.error("Error accessing PDF file");
+    });
 
     setSelectedPDF(resource.url);
   };
