@@ -96,38 +96,38 @@
 
 // export default Login;
 
-import React, { useState } from 'react';
-import { loginUser } from '../../api/api';
-import { useNavigate, Link } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import { motion } from 'framer-motion';
-import { FaEnvelope, FaLock, FaSpinner } from 'react-icons/fa';
+import React, { useState } from "react";
+import { loginUser } from "../../api/api";
+import { useNavigate, Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import { motion } from "framer-motion";
+import { FaEnvelope, FaLock, FaSpinner } from "react-icons/fa";
 
 const Login = () => {
-  const [formData, setFormData] = useState({ email: '', password: '' });
-  const [error, setError] = useState('');
+  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-    setError('');
+    setError("");
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
+    setError("");
     setLoading(true);
 
     try {
       const response = await loginUser(formData);
-      localStorage.setItem('token', response.data.access);
-      toast.success('Login successful!');
-      navigate('/');
+      localStorage.setItem("token", response.data.access);
+      toast.success("Login successful!");
+      navigate("/");
     } catch (error) {
       console.error(error.response ? error.response.data : error.message);
-      setError('Invalid credentials.');
-      toast.error('Login failed.');
+      setError("Invalid credentials.");
+      toast.error("Login failed.");
     } finally {
       setLoading(false);
     }
@@ -146,8 +146,11 @@ const Login = () => {
             Welcome Back
           </h2>
           <p className="mt-2 text-center text-sm text-blue-200">
-            Don't have an account?{' '}
-            <Link to="/register" className="font-medium text-blue-400 hover:text-blue-300">
+            Don't have an account?{" "}
+            <Link
+              to="/register"
+              className="font-medium text-blue-400 hover:text-blue-300"
+            >
               Sign up
             </Link>
           </p>
@@ -201,7 +204,7 @@ const Login = () => {
               {loading ? (
                 <FaSpinner className="animate-spin h-5 w-5" />
               ) : (
-                'Sign in'
+                "Sign in"
               )}
             </button>
           </div>
@@ -214,14 +217,20 @@ const Login = () => {
                 type="checkbox"
                 className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
               />
-              <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-300">
+              <label
+                htmlFor="remember-me"
+                className="ml-2 block text-sm text-gray-300"
+              >
                 Remember me
               </label>
             </div>
 
             <div className="text-sm">
-              <Link to="/forgot-password" className="font-medium text-blue-400 hover:text-blue-300">
-                Forgot password?
+              <Link
+                to="/forgot-password"
+                className="text-blue-400 hover:text-blue-300"
+              >
+                Forgot Password?
               </Link>
             </div>
           </div>
