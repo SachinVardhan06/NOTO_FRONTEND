@@ -4,6 +4,23 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { FaLock, FaSearch, FaBook, FaFileAlt } from "react-icons/fa";
 
+const PDFViewer = ({ url, onClose }) => {
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+      <div className="w-full max-w-4xl bg-white rounded-lg shadow-xl relative">
+        <div className="absolute top-2 right-2 z-10 flex gap-2">
+          <button onClick={onClose} className="bg-red-500 text-white p-2 rounded-full">✕</button>
+        </div>
+        <iframe
+          src={`/PDFFiles/${url}#toolbar=0&navpanes=0`}
+          className="w-full h-[80vh]"
+          style={{ pointerEvents: 'none' }}
+        />
+      </div>
+    </div>
+  );
+};
+
 const Notes = () => {
   const [selectedClass, setSelectedClass] = useState("11");
   const [searchTerm, setSearchTerm] = useState("");
@@ -40,40 +57,59 @@ const Notes = () => {
       name: "Chemistry",
       icon: "🧪",
       chapters: [
-        { id: 1, title: "Solid State", url: "Class 12 Chapter 1.pdf" },
+        { id: 1, title: "Solid State", url: "class12chem1.pdf" },
         { id: 2, title: "Solutions", url: "class12chem2.pdf" },
       ],
     },
   ];
 
+  const samplePapers = {
+    11: [
+      {
+        id: 1,
+        subject: "Chemistry",
+        papers: [
+          { id: 1, title: "Sample Paper 1", url: "sample11chem1.pdf", isFree: true },
+          { id: 2, title: "Premium Paper 1", url: "premium11chem1.pdf" },
+        ],
+      },
+    ],
+    12: [
+      {
+        id: 1,
+        subject: "Chemistry",
+        papers: [
+          { id: 1, title: "Sample Paper 1", url: "sample12chem1.pdf", isFree: true },
+          { id: 2, title: "Premium Paper 1", url: "premium12chem1.pdf" },
+        ],
+      },
+    ],
+  };
+
   useEffect(() => {
-    // Security measures
-    const preventDefaults = (e) => {
+    const preventActions = (e) => {
       e.preventDefault();
-      toast.warning("This action is not allowed for security reasons");
+      toast.warning("This action is not allowed");
       return false;
     };
 
     const handleKeyDown = (e) => {
-      // Prevent common shortcuts
       if (
-        (e.ctrlKey && (e.key === 'p' || e.key === 's' || e.key === 'c')) ||
+        (e.ctrlKey && ['p', 's', 'c'].includes(e.key)) ||
         (e.ctrlKey && e.shiftKey && e.key === 'i') ||
         e.key === 'PrintScreen'
       ) {
-        preventDefaults(e);
+        preventActions(e);
       }
     };
 
-    // Add security event listeners
-    document.addEventListener('contextmenu', preventDefaults);
+    document.addEventListener('contextmenu', preventActions);
     document.addEventListener('keydown', handleKeyDown);
-    document.addEventListener('copy', preventDefaults);
-    document.addEventListener('cut', preventDefaults);
-    document.addEventListener('paste', preventDefaults);
-    document.addEventListener('beforeprint', preventDefaults);
+    document.addEventListener('copy', preventActions);
+    document.addEventListener('cut', preventActions);
+    document.addEventListener('paste', preventActions);
+    document.addEventListener('beforeprint', preventActions);
 
-    // Fetch subscription data
     const fetchSubscription = async () => {
       const token = localStorage.getItem("token");
       if (!token) {
@@ -100,12 +136,12 @@ const Notes = () => {
     fetchSubscription();
 
     return () => {
-      document.removeEventListener('contextmenu', preventDefaults);
+      document.removeEventListener('contextmenu', preventActions);
       document.removeEventListener('keydown', handleKeyDown);
-      document.removeEventListener('copy', preventDefaults);
-      document.removeEventListener('cut', preventDefaults);
-      document.removeEventListener('paste', preventDefaults);
-      document.removeEventListener('beforeprint', preventDefaults);
+      document.removeEventListener('copy', preventActions);
+      document.removeEventListener('cut', preventActions);
+      document.removeEventListener('paste', preventActions);
+      document.removeEventListener('beforeprint', preventActions);
     };
   }, [navigate]);
 
@@ -139,42 +175,7 @@ const Notes = () => {
       }
     }
 
-    // Open PDF with security measures
-    const pdfWindow = window.open('', '_blank');
-    pdfWindow.document.write(`
-      <html>
-        <head>
-          <title>Protected Document</title>
-          <style>
-            body { margin: 0; }
-            .watermark {
-              position: fixed;
-              top: 50%;
-              left: 50%;
-              transform: translate(-50%, -50%) rotate(-45deg);
-              font-size: 60px;
-              opacity: 0.2;
-              pointer-events: none;
-              user-select: none;
-            }
-          </style>
-        </head>
-        <body>
-          <div class="watermark">ACE NOTO - PROTECTED CONTENT</div>
-          <iframe 
-            src="/PDFFiles/${resource.url}" 
-            style="width:100%;height:100vh;border:none;"
-            sandbox="allow-same-origin allow-scripts"
-          ></iframe>
-          <script>
-            document.addEventListener('contextmenu', e => e.preventDefault());
-            document.addEventListener('keydown', e => {
-              if(e.ctrlKey || e.key === 'PrintScreen') e.preventDefault();
-            });
-          </script>
-        </body>
-      </html>
-    `);
+    setSelectedPDF(resource.url);
   };
 
   const filteredNotes = (selectedClass === "11" ? class11Notes : class12Notes)
@@ -195,12 +196,13 @@ const Notes = () => {
   }
 
   return (
-    <div 
-      className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-blue-900 py-6 sm:py-12 px-4"
-      style={{ userSelect: 'none' }}
-    >
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-blue-900 py-6 sm:py-12 px-4">
+      {selectedPDF && (
+        <PDFViewer url={selectedPDF} onClose={() => setSelectedPDF(null)} />
+      )}
+
       <div className="max-w-7xl mx-auto space-y-8">
-        <div className="bg-red-500 text-white p-4 rounded-lg text-center mb-6">
+        <div className="bg-red-500 text-white p-4 rounded-lg text-center">
           <p>⚠️ Protected Content - Copying and downloading not allowed</p>
         </div>
 
@@ -263,6 +265,38 @@ const Notes = () => {
                         {(!subscription || subscription.membership_type === "Free") && (
                           <FaLock className="text-yellow-500" />
                         )}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="space-y-6">
+          <h2 className="text-2xl font-bold text-white flex items-center">
+            <FaFileAlt className="mr-2" /> Sample Papers
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {samplePapers[selectedClass].map((subject) => (
+              <div
+                key={subject.id}
+                className="bg-white bg-opacity-10 backdrop-blur-lg rounded-xl p-6"
+              >
+                <h3 className="text-xl font-bold text-white mb-4">
+                  {subject.subject}
+                </h3>
+                <ul className="space-y-2">
+                  {subject.papers.map((paper) => (
+                    <li key={paper.id}>
+                      <button
+                        onClick={() => handleResourceClick(paper, "paper")}
+                        className="text-blue-200 hover:text-white transition-colors w-full py-2.5 px-3 rounded-lg hover:bg-white hover:bg-opacity-5 flex items-center justify-between"
+                      >
+                        <span>{paper.title}</span>
+                        {(!subscription || subscription.membership_type === "Free") &&
+                          !paper.isFree && <FaLock className="text-yellow-500" />}
                       </button>
                     </li>
                   ))}
