@@ -12,7 +12,7 @@ import {
   FaCheckCircle,
   FaTimesCircle,
   FaCreditCard,
-  FaHistory
+  FaHistory,
 } from "react-icons/fa";
 
 const Profile = () => {
@@ -90,9 +90,9 @@ const Profile = () => {
             <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center shadow-xl">
               <FaUser className="text-white text-4xl sm:text-5xl" />
             </div>
-            <div className="text-center sm:text-left flex-1">
-              <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-                {user?.username}
+            <div className="text-center sm:text-left flex-1 space-y-2">
+              <h1 className="text-2xl sm:text-3xl font-bold text-white">
+                {user?.first_name} {user?.last_name}
               </h1>
               <p className="text-blue-300 flex items-center justify-center sm:justify-start">
                 <FaEnvelope className="mr-2" /> {user?.email}
@@ -125,16 +125,20 @@ const Profile = () => {
                     <label className="text-sm text-blue-300">Valid Until</label>
                     <p className="text-white font-medium flex items-center">
                       <FaCalendar className="mr-2 text-blue-400" />
-                      {new Date(user?.subscription?.end_date).toLocaleDateString()}
+                      {new Date(
+                        user?.subscription?.end_date
+                      ).toLocaleDateString()}
                     </p>
                   </div>
                   <div>
                     <label className="text-sm text-blue-300">Status</label>
-                    <p className={`font-medium flex items-center ${
-                      new Date(user?.subscription?.end_date) > new Date()
-                        ? "text-green-400"
-                        : "text-red-400"
-                    }`}>
+                    <p
+                      className={`font-medium flex items-center ${
+                        new Date(user?.subscription?.end_date) > new Date()
+                          ? "text-green-400"
+                          : "text-red-400"
+                      }`}
+                    >
                       {new Date(user?.subscription?.end_date) > new Date() ? (
                         <>
                           <FaCheckCircle className="mr-2" /> Active
@@ -169,6 +173,18 @@ const Profile = () => {
             </h2>
             <div className="space-y-4">
               <div>
+                <label className="text-sm text-blue-300">Full Name</label>
+                <p className="text-white font-medium text-lg">
+                  {user?.first_name} {user?.last_name || "Not provided"}
+                </p>
+              </div>
+              <div>
+                <label className="text-sm text-blue-300">Username</label>
+                <p className="text-white font-medium">
+                  {user?.username || "Not Provided"}
+                </p>
+              </div>
+              <div>
                 <label className="text-sm text-blue-300">Member Since</label>
                 <p className="text-white font-medium">
                   {new Date(user?.date_joined).toLocaleDateString()}
@@ -177,7 +193,9 @@ const Profile = () => {
               <div>
                 <label className="text-sm text-blue-300">Last Login</label>
                 <p className="text-white font-medium">
-                  {new Date(user?.last_login || Date.now()).toLocaleDateString()}
+                  {new Date(
+                    user?.last_login || Date.now()
+                  ).toLocaleDateString()}
                 </p>
               </div>
             </div>
