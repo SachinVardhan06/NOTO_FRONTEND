@@ -22,7 +22,6 @@ import NoteCard from "./NotoCard";
 
 function HomePage() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -400,7 +399,7 @@ function HomePage() {
                     <FaYoutube size={24} />
                   </a>
                 </div>
-                <form className="mt-4">
+                {/* <form className="mt-4">
                   <label className="block text-sm font-medium mb-2">
                     Subscribe to Newsletter
                   </label>
@@ -417,7 +416,7 @@ function HomePage() {
                       Subscribe
                     </button>
                   </div>
-                </form>
+                </form> */}
               </div>
             </div>
 
