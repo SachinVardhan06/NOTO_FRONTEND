@@ -26,7 +26,7 @@ const ForgetPass = () => {
 
     setLoading(true);
     try {
-      await axios.post("https://noto-server-80j5.onrender.com/api/auth/reset-password/", {
+      await axios.post("https://noto-server-80j5.onrender.com/api/reset-password/", {
         email,
         new_password: newPassword
       });
