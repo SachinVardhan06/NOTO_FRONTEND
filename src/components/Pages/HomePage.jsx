@@ -426,24 +426,6 @@ function HomePage() {
                 © 2025 ACE NOTO. All rights reserved.
               </p>
             </div>
-            <form className="mt-4 w-full max-w-md mx-auto">
-              <label className="block text-sm md:text-base font-medium mb-2 text-center md:text-left">
-                Subscribe to Newsletter
-              </label>
-              <div className="flex flex-col sm:flex-row gap-2 sm:gap-0">
-                <input
-                  type="email"
-                  placeholder="Enter your email"
-                  className="w-full bg-gray-800 text-white px-4 py-3 sm:py-2 rounded-lg sm:rounded-l-lg sm:rounded-r-none focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-                <button
-                  type="submit"
-                  className="w-full sm:w-auto bg-blue-600 px-6 py-3 sm:py-2 rounded-lg sm:rounded-l-none sm:rounded-r-lg hover:bg-blue-700 transition-colors text-white font-medium"
-                >
-                  Subscribe
-                </button>
-              </div>
-            </form>
           </div>
         </footer>
       </div>
