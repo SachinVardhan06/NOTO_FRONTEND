@@ -7,7 +7,7 @@ const RefundPolicy = () => {
         <header className="text-center mb-12">
           <h1 className="text-4xl font-bold mb-4">Refund Policy</h1>
           <p className="text-red-400 text-xl font-semibold">NO REFUNDS ALLOWED</p>
-          <p className="text-blue-200 mt-2">Last updated: January 2024</p>
+          <p className="text-blue-200 mt-2">Last updated: January 2025</p>
         </header>
 
         <section className="space-y-6">
