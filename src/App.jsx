@@ -12,23 +12,25 @@ import PrivacyPolicy from './components/Verify Pages/PrivacyPolicy';
 import TandQ from './components/Verify Pages/T&Q';
 import RefundPolicy from './components/Verify Pages/RefundPolicy';
 import ForgetPass from './components/Auth/ForgetPass';
+import Newpage from './components/Pages/newpage';
 
 const App = () => (
   <Routes>
-    <Route path="/" element={<HomePage/>} />
+    <Route path="/" element={<Newpage/>} />
     <Route path="/register" element={<Register />} />
     <Route path="/login" element={<Login />} />
     <Route path="/subscription" element={<Subscription />} />
-    <Route path="/homepage" element={<HomePage/>} />
+    <Route path="/homepage" element={<Newpage/>} />
     <Route path="/profile" element={<Profile />} />
-    <Route path='/notes' element={<Notes />} />
+    <Route path='/resources' element={<Notes />} />
     <Route path='/faqs' element={<FAQs />} />
-    <Route path='/contactus' element={<ContactUs />} />
-    <Route path='/about' element={<AboutUs />} />
-    <Route path='/privacy' element={<PrivacyPolicy />} />
-    <Route path='/terms' element={<TandQ />} />
-    <Route path='/refund' element={<RefundPolicy />} />
+    <Route path='/contact' element={<ContactUs />} />
+    <Route path='/aboutus' element={<AboutUs />} />
+    <Route path='/privacy-policy' element={<PrivacyPolicy />} />
+    <Route path='/terms-& conditions' element={<TandQ />} />
+    <Route path='/refund-policy' element={<RefundPolicy />} />
     <Route path='/forgot-password' element={<ForgetPass />} />
+    <Route path='/newpage' element={<Newpage/>} />
   </Routes>
 );
 
