@@ -31,6 +31,7 @@ const App = () => (
     <Route path='/refund-policy' element={<RefundPolicy />} />
     <Route path='/forgot-password' element={<ForgetPass />} />
     <Route path='/newpage' element={<Newpage/>} />
+    <Route path='/notes' element={<Notes />} />
   </Routes>
 );
 
