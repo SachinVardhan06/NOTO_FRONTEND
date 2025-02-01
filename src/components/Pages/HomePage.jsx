@@ -318,7 +318,7 @@ function HomePage() {
                 <ul className="space-y-2">
                   <li>
                     <Link
-                      to="/about"
+                      to="/newpage"
                       className="text-gray-400 hover:text-white"
                     >
                       About Us
