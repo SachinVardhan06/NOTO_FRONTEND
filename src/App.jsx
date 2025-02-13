@@ -13,6 +13,7 @@ import TandQ from './components/Verify Pages/T&Q';
 import RefundPolicy from './components/Verify Pages/RefundPolicy';
 import ForgetPass from './components/Auth/ForgetPass';
 import Newpage from './components/Pages/newpage';
+import GateExam from './components/GateWork/gate';
 
 const App = () => (
   <Routes>
@@ -32,6 +33,7 @@ const App = () => (
     <Route path='/forgot-password' element={<ForgetPass />} />
     <Route path='/newpage' element={<Newpage/>} />
     <Route path='/notes' element={<Notes />} />
+    <Route path='/gateexam' element={<GateExam />} />
   </Routes>
 );
 

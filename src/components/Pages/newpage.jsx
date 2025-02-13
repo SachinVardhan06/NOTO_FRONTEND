@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Menu } from "@headlessui/react";
 import { toast } from "react-toastify";
+import { Toaster } from "react-hot-toast";
+
 import {
   FaBook,
   FaEnvelope,
@@ -120,6 +122,19 @@ function Newpage() {
 
   return (
     <div className="min-h-screen bg-gray-950 text-gray-100 relative overflow-hidden">
+      <Toaster
+        position="top-center"
+        reverseOrder={false}
+        gutter={8}
+        toastOptions={{
+          duration: 3000,
+          style: {
+            background: "#1f2937",
+            color: "#fff",
+            border: "1px solid #374151",
+          },
+        }}
+      />
       {/* Scroll Progress Bar */}
       <motion.div
         className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 to-purple-500 origin-left z-50"
@@ -158,6 +173,12 @@ function Newpage() {
                 className="text-gray-300 hover:text-white transition-colors text-sm font-medium"
               >
                 Resources
+              </Link>
+              <Link
+                to="/gateexam"
+                className="text-gray-300 hover:text-green-400"
+              >
+                GATE Mock Test
               </Link>
             </div>
 
@@ -248,7 +269,7 @@ function Newpage() {
             </Link>
             <Link to="/subscription">
               <button className="px-8 py-4 rounded-xl border border-gray-700 text-gray-300 hover:border-gray-600 hover:text-white transition-colors">
-              Subscription
+                Subscription
               </button>
             </Link>
           </div>
@@ -362,6 +383,127 @@ function Newpage() {
           <p className="text-center text-gray-400 text-sm mt-8">
             No Refund Policy. All sales are final.
           </p>
+        </div>
+      </section>
+      <section className="py-24 bg-gray-900/30 backdrop-blur-lg">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-purple-300 bg-clip-text text-transparent">
+              Practice GATE Mock Tests
+            </h2>
+            <p className="text-gray-400 max-w-xl mx-auto text-sm">
+              Prepare for GATE with our comprehensive test series
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              className="p-8 bg-gray-800/20 rounded-2xl border border-gray-800 hover:border-green-500/30 transition-all"
+            >
+              <h3 className="text-xl font-semibold text-white mb-4">
+                Full Length Tests
+              </h3>
+              <ul className="space-y-3 text-gray-300 text-sm mb-6">
+                <li className="flex items-center gap-2">
+                  <FaCheckCircle className="text-green-400" />
+                  1-hour complete mock tests
+                </li>
+                <li className="flex items-center gap-2">
+                  <FaCheckCircle className="text-green-400" />
+                  GATE pattern questions
+                </li>
+                <li className="flex items-center gap-2">
+                  <FaCheckCircle className="text-green-400" />
+                  Detailed solutions
+                </li>
+              </ul>
+              <Link
+                to="/gateexam"
+                className="inline-block px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-lg hover:opacity-90 transition-opacity text-sm font-medium"
+              >
+                Start Test
+              </Link>
+            </motion.div>
+
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              className="p-8 bg-gray-800/20 rounded-2xl border border-gray-800 hover:border-blue-500/30 transition-all"
+            >
+              <h3 className="text-xl font-semibold text-white mb-4">
+                Subject Wise Tests
+              </h3>
+              <ul className="space-y-3 text-gray-300 text-sm mb-6">
+                <li className="flex items-center gap-2">
+                  <FaCheckCircle className="text-blue-400" />
+                  Topic-focused practice
+                </li>
+                <li className="flex items-center gap-2">
+                  <FaCheckCircle className="text-blue-400" />
+                  Concept-based questions
+                </li>
+                <li className="flex items-center gap-2">
+                  <FaCheckCircle className="text-blue-400" />
+                  Video explanations
+                </li>
+              </ul>
+              <button
+                onClick={() =>
+                  toast("Subject-wise practice coming soon!", {
+                    icon: "🔜",
+                    style: {
+                      borderRadius: "10px",
+                      background: "#1f2937",
+                      color: "#fff",
+                      border: "1px solid #374151",
+                    },
+                  })
+                }
+                className="inline-block px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-500 text-white rounded-lg hover:opacity-90 transition-opacity text-sm font-medium"
+              >
+                Practice Now
+              </button>
+            </motion.div>
+
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              className="p-8 bg-gray-800/20 rounded-2xl border border-gray-800 hover:border-purple-500/30 transition-all"
+            >
+              <h3 className="text-xl font-semibold text-white mb-4">
+                Previous Year Papers
+              </h3>
+              <ul className="space-y-3 text-gray-300 text-sm mb-6">
+                <li className="flex items-center gap-2">
+                  <FaCheckCircle className="text-purple-400" />
+                  Last 10 years papers
+                </li>
+                <li className="flex items-center gap-2">
+                  <FaCheckCircle className="text-purple-400" />
+                  Detailed solutions
+                </li>
+                <li className="flex items-center gap-2">
+                  <FaCheckCircle className="text-purple-400" />
+                  Trend analysis
+                </li>
+              </ul>
+              <button
+                onClick={() =>
+                  toast("Coming soon!", {
+                    icon: "🔜",
+                    style: {
+                      borderRadius: "10px",
+                      background: "#1f2937",
+                      color: "#fff",
+                      border: "1px solid #374151",
+                    },
+                  })
+                }
+                className="inline-block px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-500 text-white rounded-lg hover:opacity-90 transition-opacity text-sm font-medium"
+              >
+                Solve Papers
+              </button>
+            </motion.div>
+          </div>
         </div>
       </section>
 
