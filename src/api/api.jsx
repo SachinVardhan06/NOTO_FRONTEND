@@ -21,6 +21,14 @@ export const sendOTP = async (email) => {
   }
 };
 
+API.interceptors.response.use(
+  (response) => response.data,
+  (error) => {
+    console.error('API Error:', error.response?.data || error.message);
+    return Promise.reject(error.response?.data || error);
+  }
+);
+
 export const verifyOTPAndRegister = async (data) => {
   try {
     const response = await API.post("verify-otp-register/", data);
@@ -31,3 +39,44 @@ export const verifyOTPAndRegister = async (data) => {
 };
 
 export default API;
+
+
+
+
+API.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+
+// Question generation endpoint with auth
+export const generateQuestions = async (data) => {
+  const token = localStorage.getItem('token');
+  if (!token) {
+    throw new Error('Authentication required');
+  }
+
+  try {
+    const response = await API.post("generate-questions/", {
+      subject: data.subject,
+      main_topic: data.mainTopic,
+      sub_topic: data.subTopic,
+      question_type: data.questionType,
+      difficulty: data.difficulty,
+      count: data.count || 5
+    }, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+    return response.data;
+  } catch (error) {
+    console.error('API Error:', error.response?.data || error.message);
+    throw error.response?.data || error;
+  }
+};

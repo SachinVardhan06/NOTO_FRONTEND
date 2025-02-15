@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Menu } from "@headlessui/react";
 import { toast } from "react-toastify";
 import { Toaster } from "react-hot-toast";
+import AIQuestionGenerator from "../AiPaperGenerator/Generator";
 
 import {
   FaBook,
@@ -22,6 +23,7 @@ import {
 } from "react-icons/fa";
 import NoteCard from "./NotoCard";
 import { useScroll, useSpring } from "framer-motion";
+import MarqueeText from "../New Comp/InfiniteScroll";
 
 const GradientBackground = () => (
   <div className="absolute inset-0 -z-10 overflow-hidden">
@@ -32,8 +34,8 @@ const GradientBackground = () => (
 
 function Newpage() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const navigate = useNavigate();
   const { scrollYProgress } = useScroll();
+  const navigate = useNavigate();
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 100,
     damping: 30,
@@ -51,6 +53,45 @@ function Newpage() {
     navigate("/homepage");
     toast.success("Logged out successfully!");
   };
+
+  const handleNavigation = (path) => {
+    try {
+      console.log("Attempting navigation to:", path);
+      navigate(path);
+      // Add success toast
+      toast.success("Loading exam section...", {
+        duration: 2000,
+        position: "top-center",
+      });
+    } catch (error) {
+      console.error("Navigation error:", error);
+      // Add error toast
+      toast.error("Failed to load exam section. Please try again.");
+    }
+  };
+  // Update the sections array
+  const sections = [
+    {
+      id: 1,
+      title: "GATE CS & IT",
+      subtitle: "Computer Science & Information Technology",
+      description:
+        "Master core CS concepts, algorithms, and programming fundamentals",
+      features: ["Data Structures", "Algorithms", "Operating Systems", "DBMS"],
+      gradient: "from-blue-600 to-purple-600",
+      path: "/gateexam", // Changed from /gate-exam
+    },
+    {
+      id: 2,
+      title: "GATE Analytics",
+      subtitle: "Data Analytics & Machine Learning",
+      description: "Explore the world of data science and advanced analytics",
+      features: ["Machine Learning", "Data Mining", "Statistics", "Python"],
+      gradient: "from-emerald-600 to-teal-600",
+      path: "/gateexam", // Changed from /gate-da
+    },
+  ];
+
   const latestNotes = [
     {
       id: 1,
@@ -143,6 +184,12 @@ function Newpage() {
 
       {/* Animated Background Elements */}
       <GradientBackground />
+      <div className="bg-gradient-to-br from-gray-900 to-blue-900">
+        <MarqueeText
+          text="🚀 GATE DA 2025 Model Paper Available! 🎯"
+          className="font-medium text-lg"
+        />
+      </div>
 
       {/* Modern Glass Navbar */}
       <nav className="fixed w-full z-40 bg-gray-900/80 backdrop-blur-xl border-b border-gray-800">
@@ -506,39 +553,99 @@ function Newpage() {
           </div>
         </div>
       </section>
+      <div className="min-h-screen bg-gradient-to-br from-gray-900 to-blue-900 py-12 px-4">
+        <div className="container mx-auto max-w-6xl">
+          <motion.h1
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-4xl md:text-5xl font-bold text-white text-center mb-4"
+          >
+            GATE 2025 Sections
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="text-xl text-gray-300 text-center mb-12"
+          >
+            Choose your path and begin your preparation journey
+          </motion.p>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            {sections.map((section, index) => (
+              <motion.div
+                key={section.id}
+                initial={{ opacity: 0, x: index % 2 === 0 ? -20 : 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.3 + index * 0.2 }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className={`relative overflow-hidden rounded-2xl bg-gradient-to-br ${section.gradient} p-1`}
+              >
+                <div className="bg-gray-900/90 rounded-xl p-8 h-full backdrop-blur-sm">
+                  <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br opacity-10" />
+
+                  <h2 className="text-3xl font-bold text-white mb-2">
+                    {section.title}
+                  </h2>
+                  <p className="text-lg text-gray-300 mb-4">
+                    {section.subtitle}
+                  </p>
+                  <p className="text-gray-400 mb-6">{section.description}</p>
+
+                  <div className="grid grid-cols-2 gap-3 mb-8">
+                    {section.features.map((feature, i) => (
+                      <div
+                        key={i}
+                        className="bg-white/10 rounded-lg px-4 py-2 text-sm text-gray-300"
+                      >
+                        {feature}
+                      </div>
+                    ))}
+                  </div>
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => handleNavigation(section.path)}
+                    className="w-full py-4 bg-white/10 hover:bg-white/20 text-white font-semibold rounded-lg transition-all duration-300 shadow-lg flex items-center justify-center gap-2"
+                  >
+                    <span>Start {section.title}</span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-5 w-5"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  </motion.button>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </div>
+      <section className="py-24 bg-gray-900/30 backdrop-blur-lg">
+  <div className="max-w-7xl mx-auto px-6">
+    <div className="text-center mb-16">
+      <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-purple-300 bg-clip-text text-transparent">
+        AI-Powered Practice
+      </h2>
+      <p className="text-gray-400 max-w-xl mx-auto text-sm">
+        Generate custom practice questions using our advanced AI system
+      </p>
+    </div>
+    <AIQuestionGenerator />
+  </div>
+</section>
 
       {/* Footer */}
       <div className="relative overflow-hidden">
         {/* Feature Section */}
-        <section className="py-24 bg-gray-900/30 backdrop-blur-lg border-y border-gray-800">
-          <div className="max-w-7xl mx-auto px-6">
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              className="text-4xl font-bold text-center mb-16 bg-gradient-to-r from-blue-400 to-purple-300 bg-clip-text text-transparent"
-            >
-              Why Choose ACE NOTO?
-            </motion.h2>
-
-            <div className="grid md:grid-cols-3 gap-8">
-              {features.map((feature) => (
-                <motion.div
-                  key={feature.title}
-                  whileHover={{ scale: 1.05 }}
-                  className="p-8 bg-gray-800/20 rounded-2xl border border-gray-800 hover:border-blue-500/30 transition-all"
-                >
-                  <feature.icon className="w-12 h-12 text-blue-400 mb-6" />
-                  <h3 className="text-xl font-semibold text-white mb-3">
-                    {feature.title}
-                  </h3>
-                  <p className="text-gray-400 text-sm leading-relaxed">
-                    {feature.description}
-                  </p>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
 
         {/* Latest Notes Section */}
         <section className="py-24 relative">

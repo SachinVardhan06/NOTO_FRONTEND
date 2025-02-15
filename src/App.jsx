@@ -14,6 +14,7 @@ import RefundPolicy from './components/Verify Pages/RefundPolicy';
 import ForgetPass from './components/Auth/ForgetPass';
 import Newpage from './components/Pages/newpage';
 import GateExam from './components/GateWork/gate';
+import AIQuestionGenerator from './components/AiPaperGenerator/Generator';
 
 const App = () => (
   <Routes>
@@ -34,6 +35,7 @@ const App = () => (
     <Route path='/newpage' element={<Newpage/>} />
     <Route path='/notes' element={<Notes />} />
     <Route path='/gateexam' element={<GateExam />} />
+    <Route path='/aiquestiongenerator' element={<AIQuestionGenerator />} />
   </Routes>
 );
 
