@@ -16,7 +16,7 @@ const isProduction = import.meta.env.VITE_APP_ENV === 'production';
 const gateSubjects = [
   { id: "cs", name: "Computer Science" },
   { id: "da", name: "Data Analytics" },
-  {id: "ece", name: "Electronics & Communication" },
+  { id: "ece", name: "Electronics & Communication" },
 ];
 
 const csTopics = {
@@ -279,7 +279,7 @@ const AIQuestionGenerator = () => {
         return {};
     }
   };
-  
+
   const handleOptionSelect = (questionIndex, optionIndex) => {
     const question = questions[questionIndex];
     if (question.type === "mcq") {
