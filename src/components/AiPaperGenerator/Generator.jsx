@@ -2,7 +2,10 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import toast from "react-hot-toast";
 import { FaBrain, FaSpinner } from "react-icons/fa";
-import { generateQuestions as generateQuestionsAPI } from "../../api/api";
+import { GoogleGenerativeAI } from "@google/generative-ai";
+
+// Initialize Gemini
+const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
 
 const gateSubjects = [
   { id: "cs", name: "Computer Science" },
@@ -58,7 +61,6 @@ const AIQuestionGenerator = () => {
   const [questions, setQuestions] = useState([]);
   const [numericalAnswers, setNumericalAnswers] = useState({});
   const [showExplanation, setShowExplanation] = useState({});
-  // Add this with other state variables
   const [selectedAnswers, setSelectedAnswers] = useState({});
 
   const handleTopicChange = (main) => {
@@ -122,14 +124,37 @@ const AIQuestionGenerator = () => {
       setLoading(true);
       toast.loading("Generating questions...", { id: "generating" });
 
-      const response = await generateQuestionsAPI({
-        subject,
-        mainTopic,
-        subTopic,
-        questionType,
-        difficulty,
-        count: 5,
-      });
+      const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+
+      const prompt = `Generate 5 GATE ${subject.toUpperCase()} questions about ${mainTopic} (${subTopic}) 
+      at ${difficulty} difficulty level. Question type: ${questionType}.
+      Return a JSON object with this structure, and ONLY this structure without any additional text or formatting:
+      {
+        "questions": [
+          {
+            "text": "question text",
+            "type": "${questionType}",
+            "options": [
+              {"text": "option A", "isCorrect": false},
+              {"text": "option B", "isCorrect": true},
+              {"text": "option C", "isCorrect": false},
+              {"text": "option D", "isCorrect": false}
+            ],
+            "explanation": "detailed explanation"
+          }
+        ]
+      }`;
+
+      const result = await model.generateContent(prompt);
+      const responseText = result.response.text();
+
+      // Clean up the response text to ensure valid JSON
+      const cleanJson = responseText
+        .replace(/```json\s*/, "") // Remove ```json
+        .replace(/```\s*$/, "") // Remove closing ```
+        .trim(); // Remove whitespace
+
+      const response = JSON.parse(cleanJson);
 
       if (response?.questions?.length > 0) {
         setQuestions(response.questions);
@@ -144,9 +169,13 @@ const AIQuestionGenerator = () => {
       }
     } catch (error) {
       console.error("Question generation error:", error);
-      toast.error("Failed to generate questions. Please try again.", {
-        id: "generating",
-      });
+
+      let errorMessage = "Failed to generate questions. Please try again.";
+      if (error instanceof SyntaxError) {
+        errorMessage = "Invalid response format. Please try again.";
+      }
+
+      toast.error(errorMessage, { id: "generating" });
       setQuestions([]);
     } finally {
       setLoading(false);
