@@ -16,6 +16,7 @@ const isProduction = import.meta.env.VITE_APP_ENV === 'production';
 const gateSubjects = [
   { id: "cs", name: "Computer Science" },
   { id: "da", name: "Data Analytics" },
+  {id: "ece", name: "Electronics & Communication" },
 ];
 
 const csTopics = {
@@ -168,6 +169,81 @@ const daTopics = {
   ]
 };
 
+const eceTopics = {
+  "Analog Electronics": [
+    "Semiconductor Physics",
+    "BJT & FET",
+    "Operational Amplifiers",
+    "Feedback Amplifiers",
+    "Oscillators",
+    "Power Electronics",
+    "Analog Filters",
+    "Voltage Regulators",
+    "Integrated Circuits",
+    "Mixed Signal Design"
+  ],
+  "Digital Electronics": [
+    "Boolean Algebra",
+    "Logic Gates",
+    "Sequential Circuits",
+    "Combinational Circuits",
+    "Memory Systems",
+    "ADC & DAC",
+    "VHDL",
+    "Microprocessors",
+    "FPGA",
+    "Digital Design"
+  ],
+  "Signals & Systems": [
+    "Fourier Series",
+    "Fourier Transform",
+    "Laplace Transform",
+    "Z Transform",
+    "Sampling Theorem",
+    "LTI Systems",
+    "Convolution",
+    "Filter Design",
+    "State Space Analysis",
+    "Signal Processing"
+  ],
+  "Communications": [
+    "Analog Modulation",
+    "Digital Modulation",
+    "Information Theory",
+    "Error Control Coding",
+    "Antenna Theory",
+    "Wave Propagation",
+    "Mobile Communications",
+    "Satellite Communications",
+    "Optical Communications",
+    "5G Technology"
+  ],
+  "Electromagnetics": [
+    "Maxwell Equations",
+    "Transmission Lines",
+    "Waveguides",
+    "Radiation",
+    "EMI & EMC",
+    "Microwave Theory",
+    "Smith Chart",
+    "RF Design",
+    "Field Theory",
+    "Antenna Design"
+  ],
+  "Control Systems": [
+    "Transfer Functions",
+    "Block Diagrams",
+    "Time Response",
+    "Frequency Response",
+    "Stability Analysis",
+    "Root Locus",
+    "Bode Plot",
+    "Nyquist Plot",
+    "PID Controllers",
+    "State Space Control"
+  ]
+};
+
 const questionTypes = [
   { id: "mcq", name: "Multiple Choice (1 Mark)", marks: 1 },
   { id: "maq", name: "Multiple Answer (2 Marks)", marks: 2 },
@@ -192,8 +268,18 @@ const AIQuestionGenerator = () => {
   };
 
   const getTopics = () => {
-    return subject === "cs" ? csTopics : daTopics;
+    switch(subject) {
+      case "cs":
+        return csTopics;
+      case "da":
+        return daTopics;
+      case "ece":
+        return eceTopics;
+      default:
+        return {};
+    }
   };
+  
   const handleOptionSelect = (questionIndex, optionIndex) => {
     const question = questions[questionIndex];
     if (question.type === "mcq") {
