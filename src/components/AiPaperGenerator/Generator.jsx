@@ -107,63 +107,51 @@ const AIQuestionGenerator = () => {
     return selected.includes(optionIndex);
   };
   const difficulties = [
-    { id: 'easy', name: 'Easy' },
-    { id: 'medium', name: 'Medium' },
-    { id: 'hard', name: 'Hard' }
+    { id: "easy", name: "Easy" },
+    { id: "medium", name: "Medium" },
+    { id: "hard", name: "Hard" },
   ];
-
+  // Update the generateQuestions function
   const generateQuestions = async () => {
     if (!subject || !mainTopic || !subTopic || !questionType) {
       toast.error("Please fill in all fields");
       return;
     }
-  
-    const token = localStorage.getItem('token');
-    if (!token) {
-      toast.error("Please login to generate questions");
-      // Optionally redirect to login page
-      return;
-    }
-  
+
     try {
       setLoading(true);
       toast.loading("Generating questions...", { id: "generating" });
-  
+
       const response = await generateQuestionsAPI({
         subject,
         mainTopic,
         subTopic,
         questionType,
         difficulty,
-        count: 5
+        count: 5,
       });
-  
+
       if (response?.questions?.length > 0) {
         setQuestions(response.questions);
         setSelectedAnswers({});
         setNumericalAnswers({});
         setShowExplanation({});
-        toast.success("Questions generated successfully!", { id: "generating" });
+        toast.success("Questions generated successfully!", {
+          id: "generating",
+        });
       } else {
-        throw new Error("No questions received from the server");
+        throw new Error("No questions received");
       }
     } catch (error) {
       console.error("Question generation error:", error);
-      if (error.detail === "Authentication credentials were not provided.") {
-        toast.error("Please login again to continue", { id: "generating" });
-        // Handle logout or token refresh here
-      } else {
-        toast.error(
-          error.detail || "Failed to generate questions. Please try again.",
-          { id: "generating" }
-        );
-      }
+      toast.error("Failed to generate questions. Please try again.", {
+        id: "generating",
+      });
       setQuestions([]);
     } finally {
       setLoading(false);
     }
   };
-
   return (
     <div className="max-w-4xl mx-auto p-8 bg-gray-900/50 backdrop-blur-xl rounded-2xl border border-gray-800">
       <div className="space-y-6">

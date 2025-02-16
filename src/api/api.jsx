@@ -40,7 +40,28 @@ export const verifyOTPAndRegister = async (data) => {
 
 export default API;
 
-
+API.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const originalRequest = error.config;
+    
+    if (error.response?.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      try {
+        const newToken = await refreshToken();
+        localStorage.setItem('token', newToken);
+        originalRequest.headers.Authorization = `Bearer ${newToken}`;
+        return API(originalRequest);
+      } catch (refreshError) {
+        // Handle refresh token failure
+        localStorage.removeItem('token');
+        window.location.href = '/login';
+        return Promise.reject(refreshError);
+      }
+    }
+    return Promise.reject(error);
+  }
+);
 
 
 API.interceptors.request.use(
@@ -56,11 +77,6 @@ API.interceptors.request.use(
 
 // Question generation endpoint with auth
 export const generateQuestions = async (data) => {
-  const token = localStorage.getItem('token');
-  if (!token) {
-    throw new Error('Authentication required');
-  }
-
   try {
     const response = await API.post("generate-questions/", {
       subject: data.subject,
@@ -69,14 +85,10 @@ export const generateQuestions = async (data) => {
       question_type: data.questionType,
       difficulty: data.difficulty,
       count: data.count || 5
-    }, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
     });
     return response.data;
   } catch (error) {
     console.error('API Error:', error.response?.data || error.message);
-    throw error.response?.data || error;
+    throw error;
   }
 };
