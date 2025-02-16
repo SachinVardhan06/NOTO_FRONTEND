@@ -5,7 +5,13 @@ import { FaBrain, FaSpinner } from "react-icons/fa";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 // Initialize Gemini
-const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
+
+const VITE_GEMINI_API_KEY='AIzaSyCjZpieUb3pk3ajG3yYy2za3T9Iaxga9X0'
+
+const genAI = new GoogleGenerativeAI(VITE_GEMINI_API_KEY);
+
+const isProduction = import.meta.env.VITE_APP_ENV === 'production';
+
 
 const gateSubjects = [
   { id: "cs", name: "Computer Science" },
