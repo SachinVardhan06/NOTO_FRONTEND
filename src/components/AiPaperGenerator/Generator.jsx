@@ -20,24 +20,77 @@ const gateSubjects = [
 
 const csTopics = {
   "Programming & DS": [
-    "Arrays",
+    "Arrays & Strings",
     "Linked Lists",
-    "Trees",
+    "Stacks & Queues",
+    "Trees & Binary Trees",
     "Graphs",
     "Dynamic Programming",
+    "Searching & Sorting",
+    "Hashing",
+    "Heap",
+    "Recursion & Backtracking"
   ],
   "Theory of Computation": [
-    "Automata",
+    "Automata Theory",
     "Regular Languages",
     "Context-Free Grammar",
+    "Turing Machines",
+    "Computability Theory",
+    "Complexity Theory",
+    "Finite State Machines",
+    "Pushdown Automata",
+    "Regular Expressions",
+    "Language Hierarchies"
   ],
   "Operating Systems": [
     "Process Management",
     "Memory Management",
     "File Systems",
+    "Deadlock & Synchronization",
+    "CPU Scheduling",
+    "Disk Scheduling",
+    "Virtual Memory",
+    "Page Replacement",
+    "Process Synchronization",
+    "Linux System Calls"
   ],
-  DBMS: ["SQL", "Normalization", "Transaction Processing"],
-  "Computer Networks": ["OSI Model", "TCP/IP", "Network Security"],
+  DBMS: [
+    "SQL & DDL Commands",
+    "Normalization Forms",
+    "Transaction Processing",
+    "Concurrency Control",
+    "Recovery Management",
+    "Indexing & Hashing",
+    "Entity Relationship Model",
+    "Relational Algebra",
+    "Query Optimization",
+    "ACID Properties"
+  ],
+  "Computer Networks": [
+    "OSI Model",
+    "TCP/IP Protocol Suite",
+    "Network Security",
+    "Routing Protocols",
+    "IPv4 & IPv6",
+    "DNS & DHCP",
+    "Network Topology",
+    "Error Detection",
+    "Flow Control",
+    "Congestion Control"
+  ],
+  "Software Engineering": [
+    "SDLC Models",
+    "Agile Methodology",
+    "Software Testing",
+    "Software Metrics",
+    "Project Management",
+    "Requirements Engineering",
+    "Design Patterns",
+    "Software Architecture",
+    "Software Quality",
+    "Risk Management"
+  ]
 };
 
 const daTopics = {
@@ -45,10 +98,74 @@ const daTopics = {
     "Supervised Learning",
     "Unsupervised Learning",
     "Neural Networks",
+    "Deep Learning",
+    "Reinforcement Learning",
+    "Support Vector Machines",
+    "Decision Trees",
+    "Random Forests",
+    "Gradient Boosting",
+    "Model Evaluation"
   ],
-  "Data Mining": ["Classification", "Clustering", "Association Rules"],
-  Statistics: ["Probability", "Hypothesis Testing", "Regression"],
-  Python: ["Numpy", "Pandas", "Scikit-learn"],
+  "Data Mining": [
+    "Classification",
+    "Clustering",
+    "Association Rules",
+    "Feature Selection",
+    "Dimensionality Reduction",
+    "Pattern Recognition",
+    "Anomaly Detection",
+    "Time Series Analysis",
+    "Text Mining",
+    "Web Mining"
+  ],
+  Statistics: [
+    "Probability Theory",
+    "Hypothesis Testing",
+    "Regression Analysis",
+    "Correlation",
+    "Descriptive Statistics",
+    "Inferential Statistics",
+    "Sampling Methods",
+    "Distribution Theory",
+    "ANOVA",
+    "Statistical Learning"
+  ],
+  "Big Data": [
+    "Hadoop Ecosystem",
+    "Spark Processing",
+    "NoSQL Databases",
+    "Data Warehousing",
+    "ETL Processes",
+    "Stream Processing",
+    "Data Lake",
+    "MapReduce",
+    "Distributed Computing",
+    "Data Governance"
+  ],
+  "Data Visualization": [
+    "Tableau",
+    "Power BI",
+    "Data Storytelling",
+    "Chart Types",
+    "Interactive Dashboards",
+    "Visual Analytics",
+    "Information Design",
+    "D3.js",
+    "Geospatial Visualization",
+    "Statistical Graphics"
+  ],
+  "Python Programming": [
+    "NumPy Arrays",
+    "Pandas DataFrame",
+    "Scikit-learn",
+    "Matplotlib",
+    "Seaborn",
+    "TensorFlow",
+    "PyTorch",
+    "Data Structures",
+    "File Handling",
+    "API Integration"
+  ]
 };
 
 const questionTypes = [
