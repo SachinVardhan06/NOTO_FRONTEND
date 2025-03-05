@@ -333,7 +333,7 @@ const AIQuestionGenerator = () => {
       setLoading(true);
       toast.loading("Generating questions...", { id: "generating" });
 
-      const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+      const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
       const prompt = `Generate 5 GATE ${subject.toUpperCase()} questions about ${mainTopic} (${subTopic}) 
       at ${difficulty} difficulty level. Question type: ${questionType}.
